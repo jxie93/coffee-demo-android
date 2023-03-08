@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="@dimen/item_card_width"
+    android:layout_height="@dimen/item_card_height">
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:cardCornerRadius="@dimen/item_card_corner_radius">
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/list_item_imageView"
+            android:background="@color/cream_dark"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="centerCrop"/>
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:srcCompat="@drawable/item_view_gradient_bottom"/>
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/list_item_title"
+            android:paddingBottom="8dp"
+            android:paddingStart="16dp"
+            android:paddingEnd="16dp"
+            android:layout_gravity="bottom"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/cream"
+            android:gravity="center"
+            android:textStyle="bold"
+            tools:text="Coffee Title\nCoffee Title\nCoffee Title"/>
+
+        <androidx.appcompat.widget.AppCompatImageButton
+            android:id="@+id/list_item_likeBtn"
+            android:layout_gravity="end"
+            android:background="@null"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_heart"/>
+
+    </androidx.cardview.widget.CardView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

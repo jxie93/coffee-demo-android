@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.main.CoffeeListFragment">
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/ad_banner_imageView"
+        android:background="@color/primary"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/ad_banner_height"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <View
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintTop_toTopOf="@id/ad_banner_imageView"
+        app:layout_constraintEnd_toEndOf="@id/ad_banner_imageView"
+        app:layout_constraintStart_toStartOf="@id/ad_banner_imageView"
+        app:layout_constraintBottom_toBottomOf="@id/ad_banner_imageView"
+        android:background="@color/primary_80"/>
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintTop_toTopOf="@id/ad_banner_imageView"
+        app:layout_constraintBottom_toBottomOf="@id/ad_banner_imageView"
+        android:gravity="center"
+        android:textSize="64sp"
+        android:textStyle="bold"
+        android:textColor="@color/cream"
+        android:text="@string/app_name"/>
+
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/list_refreshLayout"
+        android:layout_marginTop="-12dp"
+        app:layout_constraintTop_toBottomOf="@id/ad_banner_imageView"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_width="match_parent"
+        android:layout_height="0dp">
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <androidx.cardview.widget.CardView
+                app:cardElevation="0dp"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:cardBackgroundColor="@color/cream"
+                app:cardCornerRadius="@dimen/bg_card_corner_radius"/>
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:layout_marginTop="4dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="16dp"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center_horizontal"
+                android:orientation="vertical">
+
+                <include
+                    android:id="@+id/list_segmentedControl"
+                    layout="@layout/layout_segmented_control" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/list_recyclerView"
+                    android:layout_marginTop="8dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+            </androidx.appcompat.widget.LinearLayoutCompat>
+        </FrameLayout>
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

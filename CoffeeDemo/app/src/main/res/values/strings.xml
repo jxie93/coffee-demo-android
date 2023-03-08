@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">Coffee!</string>
+    <string name="tab_label_iced">Iced</string>
+    <string name="tab_label_hot">Hot</string>
+    <string name="tab_label_liked">Liked</string>
+    <string name="tab_label_description">Description</string>
+    <string name="tab_label_ingredients">Ingredients</string>
+    <string name="tab_label_review">Review</string>
+</resources>

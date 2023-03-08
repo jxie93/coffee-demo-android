@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+<!--    <style name="ListBackgroundCardViewStyle" parent="@style/Widget.MaterialComponents.CardView">-->
+<!--        <item name="shapeAppearanceOverlay">@style/ShapeAppearanceOverlay_customCorners</item>-->
+<!--    </style>-->
+
+<!--    <style name="ShapeAppearanceOverlay_customCorners" parent="">-->
+<!--        <item name="cornerFamily">rounded</item>-->
+<!--        <item name="cornerSizeTopRight">@dimen/bg_card_corner_radius</item>-->
+<!--        <item name="cornerSizeTopLeft">@dimen/bg_card_corner_radius</item>-->
+<!--        <item name="cornerSizeBottomRight">0dp</item>-->
+<!--        <item name="cornerSizeBottomLeft">0dp</item>-->
+<!--    </style>-->
+</resources>

@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+    <com.google.android.material.button.MaterialButtonToggleGroup
+        android:id="@+id/list_segmentedControl_group"
+        android:padding="8dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:singleSelection="true"
+        app:selectionRequired="true"
+        app:layout_constraintTop_toTopOf="parent">
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/list_segmentedControl_hot_btn"
+            android:layout_weight="0.3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="?attr/materialButtonOutlinedStyle"
+            android:text="@string/tab_label_hot"/>
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/list_segmentedControl_iced_btn"
+            android:layout_weight="0.3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="?attr/materialButtonOutlinedStyle"
+            android:text="@string/tab_label_iced"/>
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/list_segmentedControl_liked_btn"
+            android:layout_weight="0.3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="?attr/materialButtonOutlinedStyle"
+            android:text="@string/tab_label_liked"/>
+    </com.google.android.material.button.MaterialButtonToggleGroup>
+</FrameLayout>

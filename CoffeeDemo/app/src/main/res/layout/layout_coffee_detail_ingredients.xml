@@ -13,6 +13,7 @@
             app:layout_constraintTop_toTopOf="parent"
             android:id="@+id/detail_pager_ingredients_label"
             android:layout_width="match_parent"
+            app:lineHeight="30sp"
             android:textSize="20sp"
             android:layout_height="wrap_content"/>
 

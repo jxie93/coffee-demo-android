@@ -3,6 +3,7 @@
     <color name="accent">#FFC3A1</color>
     <color name="tertiary">#A7727D</color>
     <color name="secondary">#D46A56</color>
+    <color name="secondary_20">#33D46A56</color>
     <color name="primary">#A75D5D</color>
     <color name="primary_80">#CCA75D5D</color>
     <color name="black">#FF000000</color>

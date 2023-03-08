@@ -7,6 +7,9 @@ import javax.inject.Inject
 internal class GetPrettyIngredientsTextUseCase {
     operator fun invoke(coffee: Coffee): String {
         if (coffee.ingredients.isEmpty()) return ""
-        return coffee.ingredients.joinToString()
+        return coffee.ingredients.joinToString(
+            separator = "\n• ",
+            prefix = "• "
+        )
     }
 }

@@ -162,7 +162,7 @@ internal class CoffeeListViewHolder(view: View): ViewHolder(view) {
         itemView.tag = coffee.id
         label?.text = coffee.title
         thumbnail?.let {
-            Log.i("COFFEE!", "load ${coffee.image}")
+//            Log.i("COFFEE!", "load ${coffee.image}")
             Picasso.get()
                 .load(coffee.image)
                 .noFade()

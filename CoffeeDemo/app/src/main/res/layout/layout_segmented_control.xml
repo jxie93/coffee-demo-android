@@ -20,13 +20,6 @@
             style="?attr/materialButtonOutlinedStyle"
             android:text="@string/tab_label_hot"/>
         <com.google.android.material.button.MaterialButton
-            android:id="@+id/list_segmentedControl_iced_btn"
-            android:layout_weight="0.3"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            style="?attr/materialButtonOutlinedStyle"
-            android:text="@string/tab_label_iced"/>
-        <com.google.android.material.button.MaterialButton
             android:id="@+id/list_segmentedControl_liked_btn"
             android:layout_weight="0.3"
             android:layout_width="wrap_content"

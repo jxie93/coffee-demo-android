@@ -102,7 +102,6 @@ class CoffeeListFragment : Fragment(), CoffeeListAdapterDelegate {
             viewModel.changeDisplayCategory(
                 when(checkedId) {
                     R.id.list_segmentedControl_hot_btn -> CoffeeListViewModel.DisplayCategory.HOT
-                    R.id.list_segmentedControl_iced_btn -> CoffeeListViewModel.DisplayCategory.ICED
                     R.id.list_segmentedControl_liked_btn -> CoffeeListViewModel.DisplayCategory.LIKED
                     else -> throw CoffeeError.InvalidCoffeeCategory()
                 }
@@ -126,21 +125,17 @@ class CoffeeListFragment : Fragment(), CoffeeListAdapterDelegate {
     }
 
     private fun updateSegmentedControl(category: CoffeeListViewModel.DisplayCategory) {
-        val icedBtn = binding.listSegmentedControl.listSegmentedControlIcedBtn
         val hotBtn = binding.listSegmentedControl.listSegmentedControlHotBtn
         val likedBtn = binding.listSegmentedControl.listSegmentedControlLikedBtn
         hotBtn.isChecked = false
-        icedBtn.isChecked = false
         likedBtn.isChecked = false
         when(category) {
             CoffeeListViewModel.DisplayCategory.HOT -> hotBtn.isChecked = true
-            CoffeeListViewModel.DisplayCategory.ICED -> icedBtn.isChecked = true
             CoffeeListViewModel.DisplayCategory.LIKED -> likedBtn.isChecked = true
         }
     }
 
     private fun onDisplayDataUpdate(data: List<Coffee>) {
-        updateBanner(data)
         coffeeListAdapter.updateData(data.ifEmpty { Coffee.placeholders })
     }
 
@@ -152,6 +147,7 @@ class CoffeeListFragment : Fragment(), CoffeeListAdapterDelegate {
             }.launchIn(this)
             viewModel.displayCategory.onEach {
                 Log.i("COFFEE!", "displayCategory -> $it")
+                updateBanner(viewModel.displayDataFlow.value)
                 updateSegmentedControl(it)
             }.launchIn(this)
             viewModel.isLoading.onEach {

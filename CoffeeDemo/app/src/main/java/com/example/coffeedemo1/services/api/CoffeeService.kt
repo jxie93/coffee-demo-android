@@ -14,8 +14,9 @@ internal interface CoffeeService {
     suspend fun loadAll()
     suspend fun loadIcedCoffee()
     suspend fun loadHotCoffee()
-    suspend fun likeCoffee(id: String)
-    suspend fun unlikeCoffee(id: String)
+    fun likeCoffee(id: String)
+    fun unlikeCoffee(id: String)
+    fun isCoffeeLiked(id: String): Boolean
 }
 
 internal class CoffeeServiceImpl @Inject constructor(
@@ -39,14 +40,16 @@ internal class CoffeeServiceImpl @Inject constructor(
         }
     }
 
-    override suspend fun likeCoffee(id: String) {
-        likedIds.add(id)
-        TODO("Not yet implemented")
+    override fun isCoffeeLiked(id: String): Boolean {
+        return id in likedIds
     }
 
-    override suspend fun unlikeCoffee(id: String) {
+    override fun likeCoffee(id: String) {
+        likedIds.add(id)
+    }
+
+    override fun unlikeCoffee(id: String) {
         likedIds.remove(id)
-        TODO("Not yet implemented")
     }
 
     override suspend fun loadAll() {

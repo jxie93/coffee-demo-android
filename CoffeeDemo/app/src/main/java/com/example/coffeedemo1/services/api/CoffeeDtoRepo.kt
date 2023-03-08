@@ -13,8 +13,9 @@ import kotlin.coroutines.suspendCoroutine
 internal interface CoffeeDtoRepo{
     suspend fun fetchHotCoffees(): List<CoffeeDto>
     suspend fun fetchIcedCoffees(): List<CoffeeDto>
-    suspend fun getHotCoffeeDto(id: Int): CoffeeDto?
-    suspend fun getIcedCoffeeDto(id: Int): CoffeeDto?
+    fun getHotCoffeeDto(id: Int): CoffeeDto?
+    fun getIcedCoffeeDto(id: Int): CoffeeDto?
+    fun getHotCoffeeDtos(): List<CoffeeDto>
 }
 
 internal class CoffeeDtoRepoImpl @Inject constructor(
@@ -23,11 +24,13 @@ internal class CoffeeDtoRepoImpl @Inject constructor(
     var hotCoffeeDtoList: List<CoffeeDto>? = emptyList()
     var icedCoffeeDtoList: List<CoffeeDto>? = emptyList()
 
-    override suspend fun getHotCoffeeDto(id: Int): CoffeeDto? =
+    override fun getHotCoffeeDto(id: Int): CoffeeDto? =
         hotCoffeeDtoList?.firstOrNull { it.id == id }
 
-    override suspend fun getIcedCoffeeDto(id: Int): CoffeeDto? =
+    override fun getIcedCoffeeDto(id: Int): CoffeeDto? =
         icedCoffeeDtoList?.firstOrNull { it.id == id }
+
+    override fun getHotCoffeeDtos(): List<CoffeeDto> = hotCoffeeDtoList ?: emptyList()
 
     override suspend fun fetchHotCoffees(): List<CoffeeDto> = suspendCoroutine { continuation ->
         apiService.getHotCoffeeList().enqueue(object : retrofit2.Callback<List<CoffeeDto>?> {

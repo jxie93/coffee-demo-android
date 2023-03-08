@@ -12,10 +12,9 @@ internal class GetHotCoffeesUseCase @Inject constructor(
 ) {
     suspend operator fun invoke(): List<Coffee> {
         val dtos = coffeeDtoRepo.getHotCoffeeDtos()
-        return dtos.map {
-            Coffee(it, true)
-        }.takeIf { it.isNotEmpty() } ?:
-        coffeeDao.getAll().filter { it.isHot } //fallback to local
+        return dtos.map { Coffee(it, true) }
+            .takeIf { it.isNotEmpty() } ?:
+            coffeeDao.getAll().filter { it.isHot } //fallback to local
     }
 
 }

@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="detail_image_height">720dp</dimen>
+    <dimen name="ad_banner_height">400dp</dimen>
+    <dimen name="item_card_width">320dp</dimen>
+    <dimen name="item_card_height">400dp</dimen>
+</resources>

@@ -37,6 +37,10 @@ internal class CoffeeListAdapter(
         NORMAL, PLACEHOLDER
     }
 
+    init {
+        setHasStableIds(true)
+    }
+
     fun updateData(data: List<Coffee>, useDiff: Boolean = false) {
         val oldData = this.data
         this.data = data
@@ -45,6 +49,10 @@ internal class CoffeeListAdapter(
         } else {
             notifyDataSetChanged()
         }
+    }
+
+    override fun getItemId(position: Int): Long {
+        return position.toLong()
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CoffeeListViewHolder {

@@ -9,6 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.example.coffeedemo1.R
 import com.example.coffeedemo1.databinding.FragmentCoffeeListBinding
 import com.example.coffeedemo1.domain.Coffee
@@ -109,19 +110,26 @@ class CoffeeListFragment : Fragment(), CoffeeListAdapterDelegate {
         }
 
         //recyclerview
-        val resources = requireActivity().resources
         binding.listRecyclerView.apply {
             layoutManager = GridLayoutManager(requireActivity(), GRID_COLUMN_MAX)
             adapter = coffeeListAdapter
-            addItemDecoration(
-                CoffeeListItemDecoration(
-                    resources.getDimensionPixelSize(R.dimen.item_card_spacing),
-                    GRID_COLUMN_MAX
-                )
-            )
+            updateItemDecoration()
         }
-
         coffeeListAdapter.updateData(Coffee.placeholders)
+    }
+
+    private fun RecyclerView.updateItemDecoration() {
+        if (itemDecorationCount > 0) {
+            (0 until itemDecorationCount).forEach { index ->
+                removeItemDecoration(getItemDecorationAt(index))
+            }
+        }
+        addItemDecoration(
+            CoffeeListItemDecoration(
+                resources.getDimensionPixelSize(R.dimen.item_card_spacing),
+                GRID_COLUMN_MAX
+            )
+        )
     }
 
     private fun updateSegmentedControl(category: CoffeeListViewModel.DisplayCategory) {
@@ -136,7 +144,7 @@ class CoffeeListFragment : Fragment(), CoffeeListAdapterDelegate {
     }
 
     private fun onDisplayDataUpdate(data: List<Coffee>) {
-        coffeeListAdapter.updateData(data.ifEmpty { Coffee.placeholders })
+        coffeeListAdapter.updateData(data.ifEmpty { Coffee.placeholders }, true)
     }
 
     private fun subscribeFlows() {

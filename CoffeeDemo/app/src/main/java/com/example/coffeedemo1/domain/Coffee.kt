@@ -1,21 +1,43 @@
 package com.example.coffeedemo1.domain
 
 import android.net.Uri
+import androidx.room.ColumnInfo
+import androidx.room.Entity
+import androidx.room.PrimaryKey
+import androidx.room.TypeConverter
+import kotlinx.serialization.ExperimentalSerializationApi
+import kotlinx.serialization.decodeFromString
+import kotlinx.serialization.encodeToString
+import kotlinx.serialization.json.Json
 import java.util.UUID
 
 internal enum class CoffeeCategory {
     HOT, ICED
 }
 
+@OptIn(ExperimentalSerializationApi::class)
+internal class EntityConverters {
+    private val json = Json { isLenient = true }
+    @TypeConverter
+    fun fromStringToList(input: String): List<String> = json.decodeFromString(input)
+    @TypeConverter
+    fun fromList(list: List<String>): String = json.encodeToString(list)
+    @TypeConverter
+    fun fromStringToUri(input: String): Uri = input.uriFromString
+    @TypeConverter
+    fun fromUri(uri: Uri): String = uri.toString()
+}
+
+@Entity
 internal data class Coffee(
-    val title: String,
-    val description: String,
-    val ingredients: List<String> = emptyList(),
-    val image: Uri,
-    val id: String,
-    val category: CoffeeCategory,
-    val isPlaceholder: Boolean,
-    val isLiked: Boolean
+    @PrimaryKey val id: String,
+    @ColumnInfo("title") val title: String,
+    @ColumnInfo("description") val description: String,
+    @ColumnInfo("ingredients") val ingredients: List<String> = emptyList(),
+    @ColumnInfo("image") val image: Uri,
+    @ColumnInfo("category") val category: CoffeeCategory,
+    @ColumnInfo("isPlaceholder") val isPlaceholder: Boolean,
+    @ColumnInfo("isLiked") val isLiked: Boolean
 ) {
 
     companion object {

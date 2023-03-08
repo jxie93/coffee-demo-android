@@ -36,12 +36,19 @@ internal class CoffeeListViewModel @Inject constructor(
     private val _displayCategory = MutableStateFlow(DisplayCategory.HOT)
     val displayCategory = _displayCategory.asStateFlow()
 
-    private var reloadDataJob: Job? = null
+    private var remoteDataJob: Job? = null
+    private var localDataJob: Job? = null
 
     init {
-        //get data
-        reloadDataJob?.cancel()
-        reloadDataJob = viewModelScope.launch(Dispatchers.IO) {
+        //get local data
+        localDataJob?.cancel()
+        localDataJob = viewModelScope.launch(Dispatchers.IO) {
+            coffeeService.loadHotCoffeeLocal()
+        }
+
+        //get remote data
+        remoteDataJob?.cancel()
+        remoteDataJob = viewModelScope.launch(Dispatchers.IO) {
             coffeeService.loadHotCoffee()
         }
 
@@ -53,29 +60,30 @@ internal class CoffeeListViewModel @Inject constructor(
                     _isLoading.value = false
                 }
 
-                val likedHotCoffees = getLikedHotCoffeesUseCase.invoke()
+                withContext(Dispatchers.IO) {
+                    val likedHotCoffees = getLikedHotCoffeesUseCase.invoke()
+                    //apply like data
+                    hotCoffeeData = getHotCoffeesWithLikesUseCase.invoke()
 
-                //apply like data
-                hotCoffeeData = getHotCoffeesWithLikesUseCase.invoke()
-
-                when(category) {
-                    DisplayCategory.HOT -> _displayDataFlow.value = hotCoffeeData
-                    DisplayCategory.LIKED -> _displayDataFlow.value = likedHotCoffees
+                    when(category) {
+                        DisplayCategory.HOT -> _displayDataFlow.value = hotCoffeeData
+                        DisplayCategory.LIKED -> _displayDataFlow.value = likedHotCoffees
+                    }
                 }
+
                 Log.i("COFFEE!", "coffeeFlow x${rawData.size} -> x${_displayDataFlow.value.size}, category $category")
         }.launchIn(viewModelScope)
     }
 
     fun likeOrUnlikeCoffee(id: String) {
         viewModelScope.launch {
-            val coffee = getHotCoffeeWithLikeUseCase.invoke(id) ?: return@launch
-            if (coffee.isLiked) {
-                coffeeService.unlikeCoffee(id)
-            } else {
-                coffeeService.likeCoffee(id)
-            }
-            //instant update display data
-            withContext(Dispatchers.Main) {
+            withContext(Dispatchers.IO) {
+                val coffee = getHotCoffeeWithLikeUseCase.invoke(id) ?: return@withContext
+                if (coffee.isLiked) {
+                    coffeeService.unlikeCoffee(id)
+                } else {
+                    coffeeService.likeCoffee(id)
+                }
                 _displayDataFlow.value = when (_displayCategory.value) {
                     DisplayCategory.HOT -> getHotCoffeesWithLikesUseCase.invoke()
                     DisplayCategory.LIKED -> getLikedHotCoffeesUseCase.invoke()
@@ -100,16 +108,16 @@ internal class CoffeeListViewModel @Inject constructor(
     }
 
     private fun reloadIcedCoffee() {
-        reloadDataJob?.cancel()
-        reloadDataJob = viewModelScope.launch(Dispatchers.IO) {
+        remoteDataJob?.cancel()
+        remoteDataJob = viewModelScope.launch(Dispatchers.IO) {
             coffeeService.loadIcedCoffee()
         }
         _isLoading.value = true
     }
 
     private fun reloadHotCoffee() {
-        reloadDataJob?.cancel()
-        reloadDataJob = viewModelScope.launch(Dispatchers.IO) {
+        remoteDataJob?.cancel()
+        remoteDataJob = viewModelScope.launch(Dispatchers.IO) {
             coffeeService.loadHotCoffee()
         }
         _isLoading.value = true

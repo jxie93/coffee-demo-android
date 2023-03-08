@@ -1,7 +1,9 @@
 package com.example.coffeedemo1.hilt
 
 import android.content.Context
+import androidx.room.Room
 import com.example.coffeedemo1.BuildConfig
+import com.example.coffeedemo1.db.AppDatabase
 import com.example.coffeedemo1.services.api.*
 import com.example.coffeedemo1.services.api.CoffeeService
 import com.example.coffeedemo1.services.api.CoffeeServiceImpl
@@ -76,15 +78,4 @@ internal class AppModule {
         retrofit: Retrofit
     ): CoffeeApiService = retrofit.create(CoffeeApiService::class.java)
 
-//    @Provides
-//    @Singleton
-//    fun provideCoffeeDtoRepo(
-//        apiService: CoffeeApiService
-//    ): CoffeeDtoRepo = CoffeeDtoRepoImpl(apiService)
-//
-//    @Provides
-//    @Singleton
-//    fun provideCoffeeService(
-//        coffeeDtoRepo: CoffeeDtoRepo
-//    ): CoffeeService = CoffeeServiceImpl(coffeeDtoRepo)
 }

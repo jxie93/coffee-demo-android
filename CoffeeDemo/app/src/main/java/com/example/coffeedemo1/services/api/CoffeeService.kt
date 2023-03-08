@@ -2,6 +2,7 @@ package com.example.coffeedemo1.services.api
 
 import android.util.Log
 import com.example.coffeedemo1.domain.Coffee
+import com.example.coffeedemo1.domain.CoffeeDao
 import com.squareup.picasso.Picasso
 import kotlinx.coroutines.channels.BufferOverflow
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -14,6 +15,7 @@ internal interface CoffeeService {
     suspend fun loadAll()
     suspend fun loadIcedCoffee()
     suspend fun loadHotCoffee()
+    suspend fun loadHotCoffeeLocal()
     fun likeCoffee(id: String)
     fun unlikeCoffee(id: String)
     fun isCoffeeLiked(id: String): Boolean
@@ -21,6 +23,7 @@ internal interface CoffeeService {
 
 internal class CoffeeServiceImpl @Inject constructor(
     private val coffeeDtoRepo: CoffeeDtoRepo,
+    private val coffeeDao: CoffeeDao
 ): CoffeeService {
 
     override val coffeeFlow: SharedFlow<List<Coffee>>
@@ -52,6 +55,13 @@ internal class CoffeeServiceImpl @Inject constructor(
         likedIds.remove(id)
     }
 
+    private fun updateLocalData(entities: List<Coffee>) {
+        if (entities.isNotEmpty()) {
+            coffeeDao.deleteAll()
+            coffeeDao.insertAndReplaceAll(entities)
+        }
+    }
+
     override suspend fun loadAll() {
         try {
             val icedCoffeeList = coffeeDtoRepo.fetchIcedCoffees()
@@ -60,6 +70,7 @@ internal class CoffeeServiceImpl @Inject constructor(
                     hotCoffeeList.map { Coffee(it, true) }
             _coffeeFlow.emit(entities)
             entities.preloadImages()
+            updateLocalData(entities)
         } catch (e: Exception) {
             Log.e("COFFEE!", CoffeeError.NoCoffeeFound(e).toString())
         }
@@ -71,6 +82,7 @@ internal class CoffeeServiceImpl @Inject constructor(
             val entities = coffeeList.map { Coffee(it, false) }
             _coffeeFlow.emit(entities)
             entities.preloadImages()
+            updateLocalData(entities)
         } catch (e: Exception) {
             Log.e("COFFEE!", CoffeeError.NoCoffeeFound(e).toString())
         }
@@ -82,9 +94,14 @@ internal class CoffeeServiceImpl @Inject constructor(
             val entities = coffeeList.map { Coffee(it, true) }
             _coffeeFlow.emit(entities)
             entities.preloadImages()
+            updateLocalData(entities)
         } catch (e: Exception) {
             Log.e("COFFEE!", CoffeeError.NoCoffeeFound(e).toString())
         }
     }
 
+    override suspend fun loadHotCoffeeLocal() {
+        Log.i("DEBUG", "local -> ${coffeeDao.getAll()}")
+        _coffeeFlow.emit(coffeeDao.getAll())
+    }
 }

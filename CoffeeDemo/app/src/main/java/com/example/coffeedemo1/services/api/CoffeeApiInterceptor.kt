@@ -29,15 +29,7 @@ internal class CoffeeApiInterceptor : Interceptor {
             //header fields - some APIs require this to prevent scraping, analytics, etc
         }
 
-        return try {
-            chain.proceed(builder.build())
-        } catch (e: Exception) { //error response
-            Log.e("COFFEE!", "http request error: $e")
-            Response.Builder().apply {
-                message(e.message.toString())
-                request(request)
-            }.build()
-        }
+        return chain.proceed(builder.build())
     }
 
 }

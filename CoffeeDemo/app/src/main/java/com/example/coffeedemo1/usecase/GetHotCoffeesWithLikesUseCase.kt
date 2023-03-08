@@ -9,17 +9,15 @@ internal class GetHotCoffeesWithLikesUseCase @Inject constructor(
     private val getLikedHotCoffeesUseCase: GetLikedHotCoffeesUseCase,
     private val getHotCoffeesUseCase: GetHotCoffeesUseCase
 ) {
-    operator fun invoke(): List<Coffee> {
+    suspend operator fun invoke(): List<Coffee> {
         val rawHotCoffeesData = getHotCoffeesUseCase.invoke()
         val likedHotCoffeesData = getLikedHotCoffeesUseCase.invoke()
-        val finalHotCoffeeData = mutableListOf<Coffee>()
-        rawHotCoffeesData.toMutableList().forEach {
-            val isLiked = it.id in likedHotCoffeesData.map { likedHot -> likedHot.id }
-            finalHotCoffeeData.add(
-                it.copy(isLiked = isLiked)
-            )
+        return mutableListOf<Coffee>().apply {
+            rawHotCoffeesData.toMutableList().forEach {
+                val isLiked = it.id in likedHotCoffeesData.map { likedHot -> likedHot.id }
+                add(it.copy(isLiked = isLiked))
+            }
         }
-        return finalHotCoffeeData
     }
 
 }

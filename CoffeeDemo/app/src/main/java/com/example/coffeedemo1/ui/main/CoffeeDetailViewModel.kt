@@ -25,7 +25,7 @@ internal class CoffeeDetailViewModel @Inject constructor(
     val coffeeEntityFlow = _coffeeEntityFlow.asStateFlow()
 
     fun loadCoffee(id: String) {
-        viewModelScope.launch {
+        viewModelScope.launch(Dispatchers.IO) {
             val coffee = getHotCoffeeUseCase.invoke(id)
             coffee?.let {
                 _coffeeEntityFlow.value = it

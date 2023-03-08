@@ -1,26 +1,24 @@
 package com.example.coffeedemo1.ui.main
 
-import android.os.SystemClock
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.appcompat.widget.AppCompatImageView
+import android.widget.DatePicker
+import androidx.appcompat.widget.AppCompatButton
+import androidx.appcompat.widget.AppCompatEditText
 import androidx.appcompat.widget.AppCompatTextView
-import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentActivity
-import androidx.fragment.app.FragmentPagerAdapter
 import androidx.recyclerview.widget.RecyclerView
-import androidx.recyclerview.widget.RecyclerView.Recycler
-import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.example.coffeedemo1.R
 import com.example.coffeedemo1.domain.Coffee
+import com.example.coffeedemo1.domain.Review
 import com.example.coffeedemo1.usecase.GetPrettyIngredientsTextUseCase
-import com.squareup.picasso.Picasso
+import com.google.android.material.slider.Slider
+import java.text.SimpleDateFormat
+import java.util.*
 
 internal interface CoffeeDetailPagerAdapterDelegate {
-    //TODO
-//    fun onCoffeeItemClicked(id: String)
+    fun onSubmitReview(review: Review)
 }
 
 internal class CoffeeDetailPagerAdapter(
@@ -55,8 +53,6 @@ internal class CoffeeDetailPagerAdapter(
             parent,
             false
         )
-        Log.i("DEBUG", "onCreateViewHolder $viewType")
-
         return when (tabType) {
             CoffeeDetailTab.DESCRIPTION ->
                 CoffeeDetailPagerDescriptionViewHolder(view)
@@ -74,6 +70,20 @@ internal class CoffeeDetailPagerAdapter(
     }
 
     override fun getItemCount(): Int = TAB_COUNT_MAX
+
+    override fun onViewDetachedFromWindow(holder: CoffeeDetailPagerViewHolder) {
+        super.onViewDetachedFromWindow(holder)
+        if (holder is CoffeeDetailPagerReviewViewHolder) {
+            holder.onSubmitClicked = {}
+        }
+    }
+
+    override fun onViewAttachedToWindow(holder: CoffeeDetailPagerViewHolder) {
+        super.onViewAttachedToWindow(holder)
+        if (holder is CoffeeDetailPagerReviewViewHolder) {
+            holder.onSubmitClicked = { review -> delegate.onSubmitReview(review) }
+        }
+    }
 }
 
 internal abstract class CoffeeDetailPagerViewHolder(view: View): RecyclerView.ViewHolder(view) {
@@ -98,7 +108,43 @@ internal class CoffeeDetailPagerIngredientsViewHolder(
 }
 
 internal class CoffeeDetailPagerReviewViewHolder(view: View): CoffeeDetailPagerViewHolder(view) {
+
+    var onSubmitClicked: (Review)->Unit = {}
+
+    private val nameEditText = itemView.findViewById<AppCompatEditText>(R.id.detail_review_editText_name)
+    private val commentEditText = itemView.findViewById<AppCompatEditText>(R.id.detail_review_editText_comment)
+    private val datePicker = itemView.findViewById<DatePicker>(R.id.detail_review_datePicker)
+    private val ratingLabel = itemView.findViewById<AppCompatTextView>(R.id.detail_review_rating_label)
+    private val ratingSlider = itemView.findViewById<Slider>(R.id.detail_review_rating_slider)
+    private val submitBtn = itemView.findViewById<AppCompatButton>(R.id.detail_review_submit_btn)
+
     override fun bind(coffee: Coffee) {
-        //TODO
+        ratingSlider.updateRatingLabel()
+        ratingSlider.addOnChangeListener { slider, value, fromUser ->
+            slider.updateRatingLabel()
+        }
+        datePicker.maxDate = Date().time //max date today
+        submitBtn.setOnClickListener {
+            onSubmitClicked(createReview())
+        }
+    }
+
+    private fun DatePicker.getSerializableDate(): String {
+        val calendar = Calendar.getInstance()
+        calendar.set(year, month, dayOfMonth)
+        val dateFormat = SimpleDateFormat("dd-MM-yyyy", Locale.ROOT)
+        return dateFormat.format(calendar.time)
+    }
+
+    private fun createReview(): Review =
+        Review(
+            name = nameEditText.text.toString(),
+            date = datePicker.getSerializableDate(),
+            comment = commentEditText.text.toString(),
+            rating = ratingSlider.value.toInt()
+        )
+
+    private fun Slider.updateRatingLabel() {
+        ratingLabel.text = "${value.toInt()}/${valueTo.toInt()}"
     }
 }

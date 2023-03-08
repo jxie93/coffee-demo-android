@@ -5,11 +5,17 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:padding="16dp">
 
-    <androidx.appcompat.widget.AppCompatTextView
-        app:layout_constraintTop_toTopOf="parent"
-        android:id="@+id/detail_pager_ingredients_label"
+    <ScrollView
         android:layout_width="match_parent"
-        android:textSize="20sp"
-        android:layout_height="wrap_content"/>
+        android:layout_height="match_parent">
+
+        <androidx.appcompat.widget.AppCompatTextView
+            app:layout_constraintTop_toTopOf="parent"
+            android:id="@+id/detail_pager_ingredients_label"
+            android:layout_width="match_parent"
+            android:textSize="20sp"
+            android:layout_height="wrap_content"/>
+
+    </ScrollView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

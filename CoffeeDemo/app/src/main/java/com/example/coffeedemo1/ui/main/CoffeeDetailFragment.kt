@@ -1,15 +1,21 @@
 package com.example.coffeedemo1.ui.main
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
+import androidx.core.content.ContextCompat
+import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.viewpager2.widget.ViewPager2
+import com.example.coffeedemo1.R
 import com.example.coffeedemo1.databinding.FragmentCoffeeDetailBinding
 import com.example.coffeedemo1.domain.Coffee
+import com.example.coffeedemo1.domain.Review
 import com.example.coffeedemo1.usecase.GetPrettyIngredientsTextUseCase
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayout.OnTabSelectedListener
@@ -98,9 +104,17 @@ class CoffeeDetailFragment : Fragment(), CoffeeDetailPagerAdapterDelegate {
             .fit() //some images are unnecessarily big - performance impact
             .tag(imageView)
             .into(imageView)
-
-        //TODO viewpager setup
         pagerAdapter.updateData(coffee)
+    }
+
+    override fun onSubmitReview(review: Review) {
+        Toast.makeText(
+            context,
+            resources.getString(R.string.message_review_submitted),
+            Toast.LENGTH_SHORT
+        ).show()
+        Log.i("COFFEE!", "onSubmitReview -> $review")
+        viewModel.sendReview(review)
     }
 
     private fun subscribeFlows() {

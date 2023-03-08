@@ -6,12 +6,17 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:padding="16dp">
 
-    <androidx.appcompat.widget.AppCompatTextView
-        app:layout_constraintTop_toTopOf="parent"
-        android:id="@+id/detail_pager_description_label"
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textSize="20sp"
-        tools:text="description text"/>
+        android:layout_height="match_parent">
 
+        <androidx.appcompat.widget.AppCompatTextView
+            app:layout_constraintTop_toTopOf="parent"
+            android:id="@+id/detail_pager_description_label"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="20sp"
+            tools:text="description text"/>
+
+    </ScrollView>
 </androidx.constraintlayout.widget.ConstraintLayout>

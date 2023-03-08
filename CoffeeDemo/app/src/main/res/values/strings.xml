@@ -6,4 +6,12 @@
     <string name="tab_label_description">Description</string>
     <string name="tab_label_ingredients">Ingredients</string>
     <string name="tab_label_review">Review</string>
+    <string name="hint_enter_name">Enter your name here</string>
+    <string name="hint_enter_comment">Enter your comment here</string>
+    <string name="detail_review_btm_submit">Submit</string>
+    <string name="detail_review_label_name">What\'s your name?</string>
+    <string name="detail_review_label_date">When did you drink this coffee?</string>
+    <string name="detail_review_label_rating">How do you rate it?</string>
+    <string name="detail_review_label_comment">What did you think?</string>
+    <string name="message_review_submitted">Review submitted. Thank you!</string>
 </resources>

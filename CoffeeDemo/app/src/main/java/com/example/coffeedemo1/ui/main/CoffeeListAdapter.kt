@@ -93,6 +93,7 @@ internal class CoffeeListAdapter(
     override fun onViewDetachedFromWindow(holder: CoffeeListViewHolder) {
         super.onViewDetachedFromWindow(holder)
         holder.itemView.setOnClickListener(null)
+        holder.onLikeClicked = {}
     }
 
     override fun onViewAttachedToWindow(holder: CoffeeListViewHolder) {

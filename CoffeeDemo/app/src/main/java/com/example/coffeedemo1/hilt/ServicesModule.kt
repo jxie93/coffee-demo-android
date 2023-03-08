@@ -25,4 +25,8 @@ internal abstract class ServicesModule {
     @Singleton
     abstract fun bindCoffeeService(impl: CoffeeServiceImpl): CoffeeService
 
+    @Binds
+    @Singleton
+    abstract fun bindCoffeeReviewService(impl: CoffeeReviewServiceImpl): CoffeeReviewService
+
 }

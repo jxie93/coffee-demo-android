@@ -77,6 +77,8 @@ class CoffeeListFragment : Fragment(), CoffeeListAdapterDelegate {
 
     override fun onCoffeeItemClicked(id: String) {
         Log.i("COFFEE!", "onCoffeeItemClicked -> $id")
+        val item = viewModel.displayDataFlow.value.firstOrNull { it.id == id }
+        if (item == null || item.isPlaceholder) return
         parentFragmentManager
             .beginTransaction()
             .setCustomAnimations(

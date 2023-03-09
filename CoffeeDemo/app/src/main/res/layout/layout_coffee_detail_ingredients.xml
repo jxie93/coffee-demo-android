@@ -15,6 +15,7 @@
             android:layout_width="match_parent"
             app:lineHeight="30sp"
             android:textSize="20sp"
+            android:textColor="@color/black_60"
             android:layout_height="wrap_content"/>
 
     </ScrollView>

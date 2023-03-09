@@ -19,6 +19,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textSize="16sp"
+                android:textColor="@color/black_60"
                 android:text="@string/detail_review_label_name"/>
             <FrameLayout
                 android:layout_marginTop="8dp"
@@ -33,6 +34,8 @@
                     android:layout_height="wrap_content"
                     android:hint="@string/hint_enter_name"
                     android:inputType="textPersonName"
+                    android:textColor="@color/black_60"
+                    android:textColorHint="@color/black_20"
                     android:maxLines="1" />
             </FrameLayout>
             <androidx.appcompat.widget.AppCompatTextView
@@ -41,20 +44,22 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textSize="16sp"
+                android:textColor="@color/black_60"
                 android:text="@string/detail_review_label_date"/>
             <DatePicker
                 android:id="@+id/detail_review_datePicker"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:calendarViewShown="false"
+                android:theme="@style/CustomDatePicker"
                 android:datePickerMode="spinner"/>
             <androidx.appcompat.widget.AppCompatTextView
                 app:layout_constraintTop_toTopOf="parent"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textSize="16sp"
+                android:textColor="@color/black_60"
                 android:text="@string/detail_review_label_rating"/>
-
                 <androidx.appcompat.widget.AppCompatTextView
                     android:gravity="center"
                     android:id="@+id/detail_review_rating_label"
@@ -63,6 +68,7 @@
                     android:layout_height="wrap_content"
                     android:textSize="36sp"
                     android:textStyle="bold|italic"
+                    android:textColor="@color/black_60"
                     tools:text="5/10"/>
                 <com.google.android.material.slider.Slider
                     android:id="@+id/detail_review_rating_slider"
@@ -78,6 +84,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textSize="16sp"
+                android:textColor="@color/black_60"
                 android:text="@string/detail_review_label_comment"/>
             <FrameLayout
                 android:layout_marginTop="8dp"
@@ -90,6 +97,8 @@
                     android:id="@+id/detail_review_editText_comment"
                     android:hint="@string/hint_enter_comment"
                     android:inputType="textMultiLine"
+                    android:textColor="@color/black_60"
+                    android:textColorHint="@color/black_20"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"/>
             </FrameLayout>
